@@ -3,26 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>WeedSense</title>
-  
+  <title>WeedSense: Multi-Task Learning for Weed Segmentation, Height Estimation, and Growth Stage Classification</title>
+  <meta name="description" content="WeedSense: A multi-task learning architecture for comprehensive weed analysis with semantic segmentation, height estimation, and growth stage classification." />
 
   <!-- Typography -->
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet" />
 
   <!-- Nerfies (Bulma) -->
-  <link rel="stylesheet" href="./static/css/bulma.min.css" />
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css" />
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css" />
-  <link rel="stylesheet" href="./static/css/nerfies.css" />
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.4/dist/css/bulma-carousel.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.5/dist/css/bulma-slider.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" />
 
-  <!-- ReconFusion (Bootstrap utilities for some widgets) -->
+  <!-- ReconFusion (Bootstrap utilities) -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <link rel="stylesheet" href="./vendor/reconfusion/css/app.css" />
-
-  <link rel="icon" href="./assets/teaser.svg" />
 
   <style>
     /* Increase icon sizes on homepage */
@@ -33,33 +28,319 @@
     .icon-link i {
       font-size: 1.5rem;
     }
+
+    /* Nerfies-style content */
+    .content {
+      text-align: justify;
+    }
+
+    .hero-body {
+      padding: 3rem 1.5rem;
+    }
+
+    /* Stats boxes */
+    .box {
+      background-color: #f5f5f5;
+      border-radius: 6px;
+      padding: 1.5rem;
+    }
+
+    .box .heading {
+      color: #7a7a7a;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Tables */
+    .table {
+      font-size: 0.875rem;
+    }
+
+    /* Image captions */
+    figcaption, .has-text-grey {
+      color: #7a7a7a;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-  <!-- ReconFusion-style Title, Authors, Affiliations, and Links -->
+  <!-- Title, Authors, Affiliations, and Links -->
   <section class="hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="row">
           <h2 class="col-md-12 text-center">
-            <b>WeedSense</b>
+            <b>WeedSense</b>: Multi-Task Learning for Weed Segmentation, Height Estimation, and Growth Stage Classification
           </h2>
         </div>
+        <div class="row text-center">
+          <div class="col-md-12 text-center">
+            <p style="margin-bottom: 0;">
+              Toqi Tahamid Sarker,
+              Khaled R Ahmed,
+              Taminul Islam,
+              Cristiana Bernardi Rankrape,
+              Karla Gage
+            </p>
+          </div>
+          <div class="col-md-12 text-center" style="margin-top: 8px;">
+            Southern Illinois University Carbondale, USA
+          </div>
+          <div class="col-md-12 text-center" style="margin-top: 8px;">
+            {toqitahamid.sarker, khaled.ahmed, taminul.islam, cris.rankrape, kgage}@siu.edu
+          </div>
+          <div class="col-md-12 text-center" style="margin-top: 12px;">
+            ICCVW 2025
+          </div>
+        </div>
+
+        <div class="row text-center" style="margin-top:10px">
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2508.14486" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv</span>
+            </a>
+            <a href="https://github.com/toqitahamid/WeedSense" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </span>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Method Summary -->
+  <section class="section" id="method">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Method Summary</h2>
+      <div class="content">
+        <ul>
+          <li><strong>Dual-path UIB Encoder</strong>: Combines a Detail Branch for fine-grained spatial features with a Semantic Branch using Universal Inverted Bottleneck blocks for efficient context extraction.</li>
+          <li><strong>Multi-Task Bifurcated Decoder</strong>: Enables joint learning of semantic segmentation, height regression, and growth stage classification in a unified framework.</li>
+          <li><strong>Temporal Growth Decoder</strong>: Leverages transformer-based feature fusion with multi-head self-attention to capture complex relationships between visual features and growth attributes.</li>
+          <li><strong>Comprehensive Dataset</strong>: 120,341 annotated images across 16 weed species, 11-week growth cycle with pixel-level masks, height measurements, and temporal labels.</li>
+        </ul>
+      </div>
+      <div class="columns is-multiline">
+        <div class="column is-one-third">
+          <div class="box">
+            <p class="heading">Parameters</p>
+            <p class="title is-4">30.50M</p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="box">
+            <p class="heading">GFLOPs</p>
+            <p class="title is-4">16.73</p>
+          </div>
+        </div>
+        <div class="column is-one-third">
+          <div class="box">
+            <p class="heading">Speed</p>
+            <p class="title is-4">160 FPS</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture Figure -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Architecture</h2>
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <img src="./asset/architecture.svg" alt="WeedSense architecture" style="width:100%; max-width:1200px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>WeedSense Architecture:</strong> The proposed framework consists of three main modules: A Dual-path UIB Encoder with parallel Detail and Semantic branches to extract multi-scale features; an Aggregation Layer that fuses these features through attention-guided operations; and a Multi-Task Bifurcated Decoder that simultaneously predicts semantic segmentation masks (17 classes including background), plant height (regression), and growth stage (11 classes).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abstract -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Weed management represents a critical challenge in agriculture, significantly impacting crop yields and requiring substantial resources for control. Effective weed monitoring and analysis strategies are crucial for implementing sustainable agricultural practices and site-specific management approaches. We introduce WeedSense, a novel multi-task learning architecture for comprehensive weed analysis that jointly performs semantic segmentation, height estimation, and growth stage classification. We present a unique dataset capturing 16 weed species over an 11-week growth cycle with pixel-level annotations, height measurements, and temporal labels. WeedSense leverages a dual-path encoder incorporating Universal Inverted Bottleneck blocks and a Multi-Task Bifurcated Decoder with transformer-based feature fusion to generate multi-scale features and enable simultaneous prediction across multiple tasks. WeedSense outperforms other state-of-the-art models on our comprehensive evaluation. On our multi-task dataset, WeedSense achieves mIoU of 89.78% for segmentation, 1.67cm MAE for height estimation, and 99.99% accuracy for growth stage classification while maintaining real-time inference at 160 FPS. Our multitask approach achieves 3× faster inference than sequential single-task execution and uses 32.4% fewer parameters.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Section -->
+  <section class="section" id="results">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Results</h2>
+      
+      <!-- Performance Metrics -->
+      <div class="columns is-centered" style="margin-bottom: 2rem;">
+        <div class="column">
+          <div class="content">
+            <h3 class="title is-4">Segmentation</h3>
+            <p><strong>mIoU:</strong> 89.78% &nbsp; <strong>mF1:</strong> 94.54%</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content">
+            <h3 class="title is-4">Height Estimation</h3>
+            <p><strong>MAE:</strong> 1.67 cm &nbsp; <strong>RMSE:</strong> 2.32 cm &nbsp; <strong>R²:</strong> 0.9941</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="content">
+            <h3 class="title is-4">Growth Stage Classification</h3>
+            <p><strong>Accuracy:</strong> 99.99% &nbsp; <strong>F1:</strong> 99.99%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Height Regression Plot -->
+      <div class="columns is-centered" style="margin-bottom: 2rem;">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="title is-4">Height Estimation Performance</h3>
+          <img src="./asset/height_regression.svg" alt="Height regression results" style="width:100%; max-width:900px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>Height estimation performance across the full measurement range (0.2-155 cm).</strong> Predictions cluster tightly along the perfect prediction line (y=x) with tolerance bands showing ±1cm, ±2cm, and ±5cm accuracy zones. The error distribution shows symmetric behavior around zero with no systematic bias.
+          </p>
+        </div>
+      </div>
+
+      <!-- Attention Maps -->
+      <div class="columns is-centered" style="margin-bottom: 2rem;">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="title is-4">Attention Activation Maps</h3>
+          <img src="./asset/attention_maps.svg" alt="Attention activation maps" style="width:100%; max-width:900px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>Visualization of attention activation maps from the aggregation layer.</strong> Each task displays distinct activation patterns: segmentation shows uniform boundary-focused activation, height estimation concentrates on plant extremities, and growth stage classification focuses on stem and mature leaf regions containing temporal growth indicators.
+          </p>
+        </div>
+      </div>
+
+      <!-- Qualitative Results -->
+      <div class="columns is-centered" style="margin-top:48px">
+        <div class="column has-text-centered">
+          <h3 class="title is-4">Qualitative Comparisons</h3>
+          <img src="./asset/qual_v2.jpg" alt="Qualitative segmentation results" style="width:100%; max-width:1200px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>Visual comparison of weed segmentation across different methods.</strong> WeedSense provides more accurate boundary delineation and better precision for fine-grained plant structures compared to baseline methods.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dataset Section -->
+  <section id="dataset" class="section" style="background-color: #fafafa;">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Dataset</h2>
+      <div class="content">
+        <p>We present a novel multi-task temporal dataset of 16 weed species growth patterns for semantic segmentation, height regression, and growth stage classification. The dataset spans 11 weeks from sprouting through flowering, providing comprehensive coverage of the primary growth cycle for weed species commonly found in Midwestern cropping systems of the USA.</p>
+      </div>
+
+      <!-- Dataset Statistics -->
+      <div class="columns is-multiline" style="margin-bottom: 2rem;">
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5">Overview</h4>
+            <table class="table is-fullwidth is-striped">
+              <tbody>
+                <tr><td>Total frames</td><td><strong>120,341</strong></td></tr>
+                <tr><td>Weed species</td><td><strong>16</strong></td></tr>
+                <tr><td>Growth duration</td><td><strong>11 weeks</strong></td></tr>
+                <tr><td>Total videos</td><td><strong>349</strong></td></tr>
+                <tr><td>Frame resolution</td><td><strong>720 × 960 pixels</strong></td></tr>
+                <tr><td>Annotation types</td><td><strong>Segmentation masks, Height, Growth stage</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="column is-half">
+          <div class="box">
+            <h4 class="title is-5">Data Split</h4>
+            <table class="table is-fullwidth is-striped">
+              <tbody>
+                <tr><td>Training</td><td><strong>80%</strong></td></tr>
+                <tr><td>Validation</td><td><strong>10%</strong></td></tr>
+                <tr><td>Test</td><td><strong>10%</strong></td></tr>
+                <tr><td>Height range</td><td><strong>0.2 - 155 cm</strong></td></tr>
+                <tr><td>Growth stages</td><td><strong>Week 1 - Week 11</strong></td></tr>
+                <tr><td>Classes</td><td><strong>17 (16 species + background)</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Growth Progression -->
+      <div class="columns is-centered" style="margin-top: 2rem;">
+        <div class="column has-text-centered">
+          <h3 class="title is-4">Growth Progression Over 11 Weeks</h3>
+          <img src="./asset/weekly_progression.jpg" alt="Weekly growth progression" style="width:100%; max-width:1200px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>Temporal progression of three representative weed species (SETFA, AMARE, ERICA).</strong> The figure demonstrates the diverse growth patterns and morphological changes captured in our dataset, from sprouting (Week 1) through flowering (Week 11).
+          </p>
+        </div>
+      </div>
+
+      <!-- Species Distribution -->
+      <div class="columns is-centered" style="margin-top: 2rem;">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="title is-4">Weed Species Distribution</h3>
+          <img src="./asset/weed_species.svg" alt="Weed species distribution" style="width:100%; max-width:900px;" />
+          <p class="has-text-grey" style="margin-top:12px">
+            <strong>Distribution of the 16 weed species in our dataset.</strong> Species are categorized by growth rates: fast-growing (>10 cm/week), medium-growing (5-10 cm/week), and slow-growing (<5 cm/week). The dataset shows significant variation in maximum height (17.3-155.0 cm) and growth patterns (1.70-14.06 cm/week).
+          </p>
+        </div>
+      </div>
+
+      <div class="content" style="margin-top: 2rem;">
+        <h4 class="title is-5">Key Features</h4>
+        <ul>
+          <li><strong>Comprehensive Annotations</strong>: Pixel-level segmentation masks generated using SAM2-Hiera-L with manual verification and correction.</li>
+          <li><strong>Temporal Coverage</strong>: Weekly imaging from Week 1 (BBCH stage 11, first true leaf) through Week 11 (BBCH stage 60, initial flower appearance).</li>
+          <li><strong>Height Measurements</strong>: 325 manual height measurements ranging from 0.2 cm to 155 cm with substantial intra-species variability.</li>
+          <li><strong>Diverse Growth Patterns</strong>: Species exhibit growth rates from 1.70 cm/week (ERICA) to 14.06 cm/week (SORHA).</li>
+          <li><strong>Controlled Environment</strong>: Data collected in greenhouse with 1000W High Pressure Sodium grow lights at optimal temperatures (30-32°C).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BibTeX -->
+  <section id="bibtex" class="section">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{sarker2025weedsense,
+  title={WeedSense: Multi-Task Learning for Weed Segmentation, Height Estimation, and Growth Stage Classification},
+  author={Sarker, Toqi Tahamid and Ahmed, Khaled R and Islam, Taminul and Rankrape, Cristiana Bernardi and Gage, Karla},
+  journal={arXiv preprint arXiv:2508.14486},
+  year={2025}
+}</code></pre>
     </div>
   </section>
 
   <footer class="footer">
     <div class="container">
       <div class="content has-text-centered">
-        <a class="icon-link" href="./assets/paper.pdf"><i class="fas fa-file-pdf"></i></a>
-        <a class="icon-link" href="https://github.com/toqitahamid/GasTwinFormer" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+        <a class="icon-link" href="https://github.com/toqitahamid/WeedSense" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
       </div>
       <div class="columns is-centered">
         <div class="column is-8">
-          <div class="content">
+          <div class="content has-text-centered">
             <p>
-              Inspired by designs from <a href="https://nerfies.github.io">Nerfies</a> and <a href="https://reconfusion.github.io">ReconFusion</a>. Please remove analytics if reusing.
+              Website design inspired by <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> and <a href="https://reconfusion.github.io" target="_blank" rel="noopener">ReconFusion</a>.
             </p>
           </div>
         </div>
@@ -69,11 +350,6 @@
 
   <!-- Scripts -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/bulma-carousel.min.js"></script>
-  <script defer src="./static/js/bulma-slider.min.js"></script>
-  <script defer src="./static/js/nerfies.js"></script>
-  <script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script defer src="./vendor/reconfusion/js/app.js"></script>
-  <script defer src="./vendor/reconfusion/js/synced_video_selector.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </body>
 </html>
